@@ -19,6 +19,14 @@ Rails.application.routes.draw do
       resources :settings, only: [] do
         get :must_update, on: :collection
       end
+      resources :jobs, only: %i[index show update create] do
+        member do
+          put :accept
+          put :cancel
+          put :complete
+          put :decline
+        end
+      end
     end
   end
 
@@ -29,6 +37,22 @@ Rails.application.routes.draw do
       mount Flipper::UI.app(Flipper) => '/feature-flags'
     end
   end
+
+  # devise_for :employer_users, ActiveEmployer::Devise.config
+  # ActiveEmployer.routes(self)
+  # namespace :employer do
+  #   authenticate(:employer_user) do
+  #     mount Flipper::UI.app(Flipper) => '/feature-flags'
+  #   end
+  # end
+
+  # devise_for :employee_users
+  # ActiveEmployee.routes(self)
+  # namespace :employee do
+  #   authenticate(:employee_user) do
+  #     mount Flipper::UI.app(Flipper) => '/feature-flags'
+  #   end
+  # end
 
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'

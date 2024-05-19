@@ -61,6 +61,9 @@ module App
       g.fixture_replacement :factory_bot, dir: 'spec/factories'
     end
 
+    config.hosts << "ce20-41-76-96-166.ngrok-free.app"
+    config.hosts << "172.16.26.231"
+
     # Log N+1s using Rails strict_loading feature
     ENV['DISABLE_RAILS_STRICT_LOADING'] ||= 'true' if defined?(Rails::Console)
     config.active_record.strict_loading_by_default = ENV['DISABLE_RAILS_STRICT_LOADING'] != 'true'

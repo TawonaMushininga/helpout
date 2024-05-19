@@ -13,7 +13,17 @@ module API
       end
 
       def render_create_success
-        render :create
+        render json: {
+          data: resource_data(resource_json: @resource.token_validation_response)
+        }
+      end
+
+      protected
+
+      def resource_data(opts = {})
+        response_data = super
+        response_data[:role] = @resource.role
+        response_data
       end
 
       def render_error(status, message, _data = nil)

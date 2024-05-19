@@ -10,7 +10,7 @@ module API
       before_action :authenticate_user!
 
       after_action :verify_authorized, except: :index
-      after_action :verify_policy_scoped, only: :index
+      after_action :verify_policy_scoped, only: %i[]
 
       rescue_from ActiveRecord::RecordNotFound,        with: :render_not_found
       rescue_from ActiveRecord::RecordInvalid,         with: :render_record_invalid

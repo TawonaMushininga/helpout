@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_09_165800) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_18_182330) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -92,6 +92,26 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_09_165800) do
     t.index ["feature_key", "key", "value"], name: "index_flipper_gates_on_feature_key_and_key_and_value", unique: true
   end
 
+  create_table "jobs", force: :cascade do |t|
+    t.integer "employer_id"
+    t.integer "employee_id"
+    t.string "title"
+    t.text "description"
+    t.string "location"
+    t.integer "job_type"
+    t.float "amount"
+    t.integer "payment_type"
+    t.integer "region"
+    t.datetime "deadline"
+    t.integer "experience"
+    t.integer "hours"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "date", precision: nil
+    t.integer "timeslot"
+    t.integer "status"
+  end
+
   create_table "settings", force: :cascade do |t|
     t.string "key", null: false
     t.string "value"
@@ -119,6 +139,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_09_165800) do
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
     t.json "tokens"
+    t.integer "role"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
