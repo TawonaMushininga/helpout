@@ -19,12 +19,18 @@ Rails.application.routes.draw do
       resources :settings, only: [] do
         get :must_update, on: :collection
       end
-      resources :jobs, only: %i[index show update create] do
+      resources :jobs, only: %i[index show update create jobs_mine] do
         member do
-          put :accept
           put :cancel
           put :complete
-          put :decline
+          put :publish
+          put :unpublish
+        end
+      end
+      resources :job_applications, only: %i[index show update create] do
+        member do
+          put :accept
+          put :reject
         end
       end
     end

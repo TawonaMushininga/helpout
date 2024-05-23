@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_18_182330) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_22_190137) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -92,6 +92,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_18_182330) do
     t.index ["feature_key", "key", "value"], name: "index_flipper_gates_on_feature_key_and_key_and_value", unique: true
   end
 
+  create_table "job_applications", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "job_id"
+    t.integer "status", default: 0
+    t.integer "decline_reason"
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "jobs", force: :cascade do |t|
     t.integer "employer_id"
     t.integer "employee_id"
@@ -110,6 +120,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_18_182330) do
     t.datetime "date", precision: nil
     t.integer "timeslot"
     t.integer "status"
+    t.text "applicants", default: [], array: true
+    t.text "applicants_rejected", default: [], array: true
+    t.integer "max_applicants"
+    t.datetime "expires_at", precision: nil
   end
 
   create_table "settings", force: :cascade do |t|

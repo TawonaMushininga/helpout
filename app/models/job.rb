@@ -2,30 +2,41 @@
 #
 # Table name: jobs
 #
-#  id           :bigint           not null, primary key
-#  employer_id  :integer
-#  employee_id  :integer
-#  title        :string
-#  description  :text
-#  location     :string
-#  job_type     :integer
-#  amount       :float
-#  payment_type :integer
-#  region       :integer
-#  deadline     :datetime
-#  experience   :integer
-#  hours        :integer
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  date         :datetime
-#  timeslot     :integer
-#  status       :integer
+#  id                  :bigint           not null, primary key
+#  employer_id         :integer
+#  employee_id         :integer
+#  title               :string
+#  description         :text
+#  location            :string
+#  job_type            :integer
+#  amount              :float
+#  payment_type        :integer
+#  region              :integer
+#  deadline            :datetime
+#  experience          :integer
+#  hours               :integer
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  date                :datetime
+#  timeslot            :integer
+#  status              :integer
+#  applicants          :text             default([]), is an Array
+#  applicants_rejected :text             default([]), is an Array
+#  max_applicants      :integer
+#  expires_at          :datetime
 #
 class Job < ApplicationRecord
     belongs_to :employer, class_name: 'User', foreign_key: 'employer_id'
     belongs_to :employee, class_name: 'User', foreign_key: 'employee_id', optional: true
+    has_many :job_applications
 
-    enum job_type: { software: 0, agriculture: 1, tutor: 2, manager: 3, fishing: 4 }
+    enum job_type: { 
+        software: 0, 
+        agriculture: 1, 
+        tutor: 2, 
+        manager: 3, 
+        fishing: 4 
+    }
     enum payment_type: { hourly: 0, fixed: 1 }
     enum region: { harare: 0, bulawayo: 1, mazowe: 2, marondera: 3, mvurwi: 4 }
     enum timeslot: { 
@@ -56,10 +67,11 @@ class Job < ApplicationRecord
     }
 
     enum status: { 
-        active: 0,
-        accepted: 1,
-        completed: 2,
-        cancelled: 3,
+        inactive: 0,
+        active: 1,
+        accepted: 2,
+        completed: 3,
+        cancelled: 4,
     }
 
     enum experience: {

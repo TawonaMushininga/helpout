@@ -13,6 +13,11 @@ module API
       end
 
       def render_create_success
+        # @token = @resource.create_new_auth_token
+        # response.headers['Authorization'] = "Bearer #{token['access-token']}"
+
+        # return_resource = @resource.token_validation_response
+        # return_resource[:jwt] = @token["Authorization"]
         render json: {
           data: resource_data(resource_json: @resource.token_validation_response)
         }

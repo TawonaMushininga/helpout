@@ -38,5 +38,17 @@ class JobPolicy < ApplicationPolicy
         true
     end
 
+    def jobs_mine?
+        true
+    end
+
+    def publish?
+        true
+    end
+
+    def unpublish?
+        true
+    end
+
   end
   

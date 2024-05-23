@@ -61,8 +61,18 @@ module App
       g.fixture_replacement :factory_bot, dir: 'spec/factories'
     end
 
-    config.hosts << "ce20-41-76-96-166.ngrok-free.app"
+    config.hosts << "8a3a-41-76-96-166.ngrok-free.app"
     config.hosts << "172.16.26.231"
+
+    config.middleware.use Rack::Cors do
+      allow do
+        origins '*'
+        resource '*',
+          :headers => :any,
+          :expose  => ['access-token', 'expiry', 'token-type', 'uid', 'client'],
+          :methods => [:get, :post, :options, :delete, :put]
+      end
+    end
 
     # Log N+1s using Rails strict_loading feature
     ENV['DISABLE_RAILS_STRICT_LOADING'] ||= 'true' if defined?(Rails::Console)

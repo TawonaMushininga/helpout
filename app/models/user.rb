@@ -47,6 +47,7 @@ class User < ApplicationRecord
 
   has_many :employer_jobs, class_name: 'Jobs', foreign_key: 'employer_id'
   has_many :employee_jobs, class_name: 'Jobs', foreign_key: 'employee_id'
+  has_many :job_applications
 
   RANSACK_ATTRIBUTES = %w[id email first_name last_name username sign_in_count current_sign_in_at
                           last_sign_in_at current_sign_in_ip last_sign_in_ip provider uid
