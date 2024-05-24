@@ -61,8 +61,8 @@ module App
       g.fixture_replacement :factory_bot, dir: 'spec/factories'
     end
 
-    config.hosts << "8a3a-41-76-96-166.ngrok-free.app"
-    config.hosts << "172.16.26.231"
+    #config.hosts << "8a3a-41-76-96-166.ngrok-free.app"
+    #config.hosts << "172.16.26.231"
 
     config.middleware.use Rack::Cors do
       allow do
