@@ -10,13 +10,13 @@ default: &default
 development:
   <<: *default
   database: helpout
-  url: <%= ENV.fetch('DATABASE_URL', '').sub(/^postgres/, "postgis") %>
+  url: <%= ENV.fetch('DATABASE_URL', '')%>
 
 test:
   <<: *default
   database: helpout_test
   # database: rails_api_base_test <%= ENV['TEST_ENV_NUMBER'] %>
-  url: <%= ENV.fetch('DATABASE_URL', '').sub(/^postgres/, "postgis") %>
+  url: <%= ENV.fetch('DATABASE_URL', '') %>
 
 # For production is recommended to set DATABASE_URL env variable.
 # It will take precedence over the config defined here.
@@ -24,4 +24,4 @@ test:
 production:
   <<: *default
   database: db/development
-  url: <%= ENV.fetch('DATABASE_URL', '').sub(/^postgres/, "postgis") %>
+  url: <%= ENV.fetch('DATABASE_URL', '') %>
