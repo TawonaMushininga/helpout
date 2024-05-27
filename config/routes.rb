@@ -19,7 +19,10 @@ Rails.application.routes.draw do
       resources :settings, only: [] do
         get :must_update, on: :collection
       end
-      resources :jobs, only: %i[index show update create jobs_mine] do
+      resources :jobs, only: %i[index show update create] do
+        collection do
+          get :jobs_mine
+        end
         member do
           put :cancel
           put :complete
