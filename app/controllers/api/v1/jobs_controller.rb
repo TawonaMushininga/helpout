@@ -7,8 +7,13 @@ module API
             def index
                 if current_user.employer?
                     @jobs = current_user.jobs
+                elsif current_user.employee?
+                    applied_job_ids = current_user.job_applications.pluck(:job_id)
+                    @jobs = Job.where(status: :active)
+                                .where.not(employer_id: [current_user.id, nil])
+                                .where.not(id: applied_job_ids)
                 else
-                    @jobs = Job.where(status: :active).where.not(employer_id: [current_user.id, nil])
+                    @jobs = Job.where(status: :active)
                 end
                 render json: @jobs
             end
