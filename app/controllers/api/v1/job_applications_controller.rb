@@ -7,7 +7,7 @@ module API
 
             def index
                 if current_user.employer?
-                    @job_applications =  current_user.job_applications
+                    @job_applications =  JobApplication.where(job_id: params[:job_id])
                     render json: @job_applications
                 elsif current_user.employee?
                     @job_applications = current_user.job_applications
