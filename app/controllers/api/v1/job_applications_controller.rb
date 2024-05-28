@@ -7,9 +7,14 @@ module API
 
             def index
                 if current_user.employer?
-                    @job_appications =  current_user.jobs.job_applications
-                else
+                    @job_appications =  current_user.job_applications
+                    render json: @job_appications
+                elsif current_user.employee?
+                    @job_appications = current_user.job_applications
                     render json: @job_applications
+                else
+                    @job_appications = JobApplication.all
+                    render json: @job_appications
                 end
             end
 

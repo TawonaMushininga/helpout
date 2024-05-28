@@ -30,6 +30,8 @@ class Job < ApplicationRecord
     belongs_to :employee, class_name: 'User', foreign_key: 'employee_id', optional: true
     has_many :job_applications
 
+    validates :title, :employer_id, :title, :description, :location, :max_applicants, presence: true
+
     enum job_type: { 
         software: 0, 
         agriculture: 1, 
