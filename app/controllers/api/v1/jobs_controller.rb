@@ -6,7 +6,7 @@ module API
 
             def index
                 if current_user.employer?
-                    @jobs = current_user.jobs
+                    @jobs = current_user.jobs_mine
                 elsif current_user.employee?
                     applied_job_ids = current_user.job_applications.pluck(:job_id)
                     @jobs = Job.where(status: :active)
