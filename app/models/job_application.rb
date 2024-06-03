@@ -15,8 +15,8 @@ class JobApplication < ApplicationRecord
     belongs_to :user
     belongs_to :job
 
-    validate :user_has_already_applied? 
     validate :job_already_taken?
+    #validate :user_has_already_applied? 
     validate :job_has_max_applicants?
 
     enum status: { pending: 0, accepted: 1, rejected: 2 }
@@ -37,11 +37,11 @@ class JobApplication < ApplicationRecord
         end
     end
 
-    def user_has_already_applied?
-        if JobApplication.where(user_id: self.user_id, job_id: self.job_id).exists?
-            errors.add(:base, "You have already applied for this job")
-        end
-    end
+    # def user_has_already_applied?
+    #     if JobApplication.where(user_id: self.user_id, job_id: self.job_id).exists?
+    #         errors.add(:base, "You have already applied for this job")
+    #     end
+    # end
 
     def job_has_max_applicants?
         if self.job.job_applications.length >= self.job.max_applicants
