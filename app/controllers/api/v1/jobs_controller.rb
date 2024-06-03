@@ -15,7 +15,7 @@ module API
                 else
                     @jobs = Job.where(status: :active)
                 end
-                render json: @jobs
+                render json: @jobs.to_json(include: :job_applications)
             end
 
             def jobs_mine
