@@ -15,19 +15,19 @@ module API
                 else
                     @jobs = Job.where(status: :active)
                 end
-                render json: @jobs.to_json(include: :job_applications)
+                render json: @job.to_json(include: { job_applications: { include: :user } })
             end
 
             def jobs_mine
                 @jobs = current_user.jobs_mine
                 authorize @jobs
-                render json: @jobs.to_json(include: :job_applications)
+                render json: @job.to_json(include: { job_applications: { include: :user } })
             end
 
 
             def show
                 authorize @job
-                render json: @job.to_json(include: :job_applications)
+                render json: @job.to_json(include: { job_applications: { include: :user } })
             end
 
             def create
@@ -45,7 +45,7 @@ module API
                 @job.status = :active
                 authorize @job
                 if @job.save
-                    render json: @job.to_json(include: :job_applications)
+                    render json: @job.to_json(include: { job_applications: { include: :user } })
                 else
                     render json: @job.errors
                 end
@@ -55,7 +55,7 @@ module API
                 @job.status = :inactive
                 authorize @job
                 if @job.save
-                    render json: @job.to_json(include: :job_applications)
+                    render json: @job.to_json(include: { job_applications: { include: :user } })
                 else
                     render json: @job.errors
                 end
@@ -66,7 +66,7 @@ module API
                 @job.status = :cancelled
                 authorize @job
                 if @job.save
-                    render json: @job.to_json(include: :job_applications)
+                    render json: @job.to_json(include: { job_applications: { include: :user } })
                 else
                     render json: @job.errors
                 end
@@ -76,7 +76,7 @@ module API
                 @job.status = :completed
                 authorize @job
                 if @job.save
-                    render json: @job.to_json(include: :job_applications)
+                    render json: @job.to_json(include: { job_applications: { include: :user } })
                 else
                     render json: @job.errors
                 end
@@ -88,7 +88,7 @@ module API
                 @job.status = :active
                 @job.employee_id = nil
                 if @job.save
-                    render json: @job.to_json(include: :job_applications)
+                    render json: @job.to_json(include: { job_applications: { include: :user } })
                 else
                     render json: @job.errors
                 end
@@ -97,7 +97,7 @@ module API
             def update
                 authorize @job
                 if @job.update(job_params)
-                    render json: @job.to_json(include: :job_applications)
+                    render json: @job.to_json(include: { job_applications: { include: :user } })
                 else
                     render json: @job.errors
                 end
