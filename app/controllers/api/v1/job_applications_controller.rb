@@ -2,8 +2,8 @@ module API
     module V1
         class JobApplicationsController < API::V1::APIController
 
-            before_action :set_job_application, only: %i[show update destroy accept]
-            after_action :verify_authorized, only: %i[show create update destroy accept]
+            before_action :set_job_application, only: %i[show update destroy accept reject]
+            after_action :verify_authorized, only: %i[show create update destroy accept reject]
 
             def index
                 if current_user.employer?
@@ -70,11 +70,11 @@ module API
             private
 
             def job_application_params
-                params.require(:job_application).permit(:job_id, :user_id, :status)
+                params.require(:job_application).permit(:job_id, :user_id, :status, :id)
             end
 
             def set_job_application
-                @job_application = Job.find(params[:job_id])
+                @job_application = Job.find(params[:id])
             end
         end
     end
