@@ -15,13 +15,13 @@ module API
                 else
                     @jobs = Job.where(status: :active)
                 end
-                render json: @job.to_json(include: { job_applications: { include: :user } })
+                render json: @jobs.to_json(include: { job_applications: { include: :user } })
             end
 
             def jobs_mine
                 @jobs = current_user.jobs_mine
                 authorize @jobs
-                render json: @job.to_json(include: { job_applications: { include: :user } })
+                render json: @jobs.to_json(include: { job_applications: { include: :user } })
             end
 
 
