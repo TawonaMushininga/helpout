@@ -74,7 +74,7 @@ module API
             end
 
             def set_job_application
-                @job_application = Job.find(params[:id])
+                @job_application = JobApplication.find(params[:id])
             end
         end
     end
