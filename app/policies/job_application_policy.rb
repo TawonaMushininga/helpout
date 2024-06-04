@@ -26,5 +26,8 @@ class JobApplicationPolicy < ApplicationPolicy
         true
     end
 
+    def reject?
+        true
+    end
   end
   
