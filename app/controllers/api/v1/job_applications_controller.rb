@@ -5,6 +5,11 @@ module API
             before_action :set_job_application, only: %i[show update destroy accept reject]
             after_action :verify_authorized, only: %i[show create update destroy accept reject]
 
+            before_action :set_job, only: %i[create]
+            before_action :job_already_taken?, only: %i[create]
+            before_action :user_has_already_applied?, only: %i[create]
+            before_action :job_has_max_applicants?, only: %i[create]
+
             def index
                 if current_user.employer?
                     @job_applications =  JobApplication.where(job_id: params[:job_id]).preload(:job)
@@ -74,7 +79,29 @@ module API
             end
 
             def set_job_application
-                @job_application = JobApplication.find(params[:id])
+                @job_application = JobApplication.includes(:job).find(params[:id])
+            end
+
+            def set_job
+                @job = Job.find(job_application_params[:job_id])
+            end
+
+            def job_already_taken?
+                unless @job.employee_id.nil?
+                    render json: { errors: "Job has already been accepted by another user" }, status: :unprocessable_entity
+                end
+            end
+        
+            def user_has_already_applied?
+                if @job.job_applications.where(user_id: current_user.id).exists?
+                    render json: { errors: "You have already applied for this job" }, status: :unprocessable_entity
+                end
+            end
+        
+            def job_has_max_applicants?
+                if @job.job_applications.length >= @job.max_applicants
+                    render json: { errors: "Job has reached maximum applicants" }, status: :unprocessable_entity
+                end
             end
         end
     end
