@@ -8,4 +8,8 @@ class UserPolicy < ApplicationPolicy
   def update?
     user.id == record.id
   end
+
+  def index?
+    true
+  end
 end

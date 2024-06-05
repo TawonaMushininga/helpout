@@ -8,6 +8,7 @@ module API
       def index
         authorize current_user
         @users = User.all
+        render json: @users
       end
 
       def show

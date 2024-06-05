@@ -16,6 +16,13 @@ Rails.application.routes.draw do
       devise_scope :user do
         resource :user, only: %i[update show]
       end
+
+      resources :users do
+        collection do
+          get 'index'
+        end
+      end
+
       resources :settings, only: [] do
         get :must_update, on: :collection
       end
